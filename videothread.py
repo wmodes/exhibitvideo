@@ -105,8 +105,8 @@ class VideoThread(threading.Thread):
             start = video['start']
         else:
             start = 0.0
-        # if start is too large, set it to 0
-        if (start >= length):
+        # if start is too large, set it to 0 (unless type=loop)
+        if (video['type'] != 'loop' and start >= length):
             start = 0.0
         # store this for later
         self._current_video = video
@@ -140,7 +140,12 @@ class VideoThread(threading.Thread):
             while (not self.stopped() and 
                    (time.time() <= start_time + length - INTER_VIDEO_DELAY)):
                 pass
-            if (video['type'] != 'loop'):
+            # If type=loop and length=0, loop forever
+            if (video['type'] == 'loop' and length == 0.0):
+                self.__debug_("Looping indefinitely for %i (%s)" % 
+                              (pgid, video['name']))
+            # otherwise, kill it
+            else:
                 self.__debug_("setting %.2fs kill timer for %i (%s)" % 
                               (INTER_VIDEO_DELAY, pgid, video['name']))
                 threading.Timer(INTER_VIDEO_DELAY, self.__stop_video__, [pgid, video['name']]).start()
