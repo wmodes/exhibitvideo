@@ -1,15 +1,30 @@
 
-""" Example data:
-        {'name': "loop-idle1",
-            'file': "media/loop-idle1.mp4",
-            'type': 'loop',                     # loop, transition, content, or 
-            'start': 0.0,                       # if omitted, assumes 0
-            'length': 0.0,                      # if omitted, assumes len(filename)
-            'disabled': True,                   # if omitted, assumes False
-         },
-"""
+# A recipe for film sequencing - a list of tuples (<type>, <length>)
+# note length here, overrides db values, and 0 takes db value
+recipe = [
+    ('transition', 0),
+    ('interview', 0),
+    ('transition', 0),
+    ('playful', 0),
+    ('transition', 0),
+    ('interview', 0),
+    ('transition', 0),
+    ('loop', 120),
+]
+
 
 films = [
+        # Example data:
+        #
+        # {'name': "sunny-day-loop",
+        #     'file': "media/sunny-day-loop.mp4",
+        #     'type': 'loop',                     # loop, transition, content, or 
+        #     'start': 0.0,                       # if omitted, assumes 0
+        #     'length': 0.0,                      # if omitted, assumes len(filename)
+        #     'disabled': False,                   # if omitted, assumes False
+        #     'tags': ['funny', 'interview'],
+        #  },
+        #
         {'name': "loop-idle1",
             'file': "media/loop-idle1.mp4",
             'type': 'loop',
@@ -29,7 +44,6 @@ films = [
             'type': 'loop',
             'disabled': True,
          },
-
         {'name': "tv-color-bars-distorted",
             'file': "media/tv-color-bars-distorted.mp4",
             'type': 'transition',

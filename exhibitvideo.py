@@ -21,11 +21,10 @@ from common import *
 # Globals
 #
 
-transition_film_list = []
-content_film_list = []
-loop_film_list = []
-# create a dictionary of lists
-content_film_dict = {}
+film_lists = {}
+
+# create a dictionary of lists - no longer needed
+#content_film_dict = {}
 
 #
 # Preparatory
@@ -35,38 +34,27 @@ def create_film_lists():
     """Iterate through imported database and sort list by type"""
     for film in films:
         if 'disabled' not in film or not film['disabled']:
-            if film['type'] == 'transition':
-                transition_film_list.append(film)
-            elif film['type'] == 'content':
-                content_film_list.append(film)
-            elif film['type'] == 'loop':
-                loop_film_list.append(film)
-
-
-def create_content_dict():
-    """Iterate through content db and create dict keyed by trigger"""
-    # look through all films in the content list
-    for film in content_film_list:
-        # if a film has a trigger key
-        if 'trigger' in film:
-            # get the film's trigger value
-            trigger_value = film['trigger']
-            # if we have not already created an entry for this trigger_value
-            if trigger_value not in content_film_dict:
-                # create a new list entry in the content dictionary with key trigger
-                content_film_dict[trigger_value] = [film]
+            # make lists of film types
+            type = film['type']
+            if type not in film_lists: 
+                film_lists[type] = [film]
             else:
-                # otherwise, append film to the existing list
-                content_film_dict[trigger_value].append(film)
+                film_lists[type].append(film)
+            # we treat tags similarly, adding them to lists
+            # Note, that this means a film can be in several lists
+            if 'tags' in film:
+                for tag in film['tags']:
+                    if tag not in film_lists: 
+                        film_lists[tag] = [film]
+                    else:
+                        film_lists[tag].append(film)
 
 #
 # Control
 #
 
-
 def main():
     create_film_lists()
-    create_content_dict()
     try:
         loop_film = choice(loop_film_list)
         loop_thread = videothread.VideoThread([loop_film], debug=1)
