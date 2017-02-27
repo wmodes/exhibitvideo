@@ -96,13 +96,10 @@ class VideoThread(threading.Thread):
             self.__debug_("not played:", video['name'], "disabled")
             return
         # get length
-        if 'length' in video:
-            if (video['length'] != 0.0):
-                length = video['length']
-            else:
-                length = self.__get_length__(video['file'])
-        else:
+        if 'length' in video and video['length'] != 0.0:
             length = video['length']
+        else:
+            length = self.__get_length__(video['file'])
         # get start
         if 'start' in video:
             start = video['start']
