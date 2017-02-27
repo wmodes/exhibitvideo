@@ -1,7 +1,13 @@
 
-layers = {'transition': 9,
-          'loop': 1,
-          'content': 5}
+""" Example data:
+        {'name': "loop-idle1",
+            'file': "media/loop-idle1.mp4",
+            'type': 'loop',                     # loop, transition, content, or 
+            'start': 0.0,                       # if omitted, assumes 0
+            'length': 0.0,                      # if omitted, assumes len(filename)
+            'disabled': True,                   # if omitted, assumes False
+         },
+"""
 
 films = [
         {'name': "loop-idle1",
@@ -28,7 +34,6 @@ films = [
             'file': "media/tv-color-bars-distorted.mp4",
             'type': 'transition',
             'length': 1.0,
-            'layer': 9,
          },
         {'name': "tv-color-bars",
             'file': "media/tv-color-bars.mp4",

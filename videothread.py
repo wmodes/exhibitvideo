@@ -31,13 +31,13 @@ class VideoThread(threading.Thread):
     _example = """
         The class takes a list containing one or more dictionaries containing
         data about the videos to be played:
-            [{'name': "idle_2",                 # name of the video
-              'file': "../media/idle_2.mp4",    # filename of the file
-              'type': 'loop',                   # video type: loop, transition, or content
-              'start': 0.0,                     # start position in video (sec) (optional)
-              'length': 0.0,                    # duration to play (sec) (optional)
-              'disabled': False                 # If set, record is ignored
-            }]
+            [{'name': "loop-idle1",
+                'file': "media/loop-idle1.mp4",
+                'type': 'loop',             # loop, transition, content, or 
+                'start': 0.0,               # if omitted, assumes 0
+                'length': 0.0,              # if omitted, assumes len(filename)
+                'disabled': True,           # if omitted, assumes False
+             },]
         """
 
     def __init__(self, playlist=None, debug=0):
@@ -96,7 +96,7 @@ class VideoThread(threading.Thread):
             self.__debug_("not played:", video['name'], "disabled")
             return
         # get length
-        if 'length' in video and video['length'] != 0.0:
+        if ('length' in video and (video['length'] != 0.0 or video['type'] == 'loop')):
             length = video['length']
         else:
             length = self.__get_length__(video['file'])
@@ -171,7 +171,7 @@ def main():
         {'name': "test-loop",
             'file': "test-loop.mp4",
             'type': 'loop',
-            'length': 120,
+            'length': 0,
          },
         {'name': "test-content",
             'file': "test-content.mp4",
