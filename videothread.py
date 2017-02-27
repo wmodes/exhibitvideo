@@ -157,7 +157,7 @@ class VideoThread(threading.Thread):
             self.__debug_("Couldn't terminate %i (%s)" % (pgid, name))
             pass
 
-    def __get_length__(filename):
+    def __get_length__(self, filename):
         return ffprobe.duration(filename)
 
 
