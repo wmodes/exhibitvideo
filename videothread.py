@@ -177,7 +177,7 @@ def main():
          },
         ]
     print "Starting threaded sequence"
-    video = VideoThread([films[1], films[2]], debug=2)
+    video = VideoThread([films[0], films[1]], debug=2)
     video.start()
     print "Sequence started"
     raw_input("Press enter to kill video")
