@@ -171,6 +171,7 @@ def main():
         {'name': "test-loop",
             'file': "test-loop.mp4",
             'type': 'loop',
+            'length': 120,
          },
         {'name': "test-content",
             'file': "test-content.mp4",
