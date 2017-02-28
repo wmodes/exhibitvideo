@@ -35,12 +35,6 @@ def create_film_lists():
     for film in films:
         if 'disabled' not in film or not film['disabled']:
             # make lists of film types
-            type = film['type']
-            if type not in film_lists: 
-                film_lists[type] = [film]
-            else:
-                film_lists[type].append(film)
-            # we treat tags similarly, adding them to lists
             # Note, that this means a film can be in several lists
             if 'tags' in film:
                 for tag in film['tags']:

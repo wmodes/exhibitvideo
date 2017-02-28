@@ -31,9 +31,9 @@ class VideoThread(threading.Thread):
     _example = """
         The class takes a list containing one or more dictionaries containing
         data about the videos to be played:
-            [{'name': "loop-idle1",
+            [{'name': "loop-idle1",         # if omitted, uses 'file'
                 'file': "media/loop-idle1.mp4",
-                'type': 'loop',             # loop, transition, content, or 
+                'tags': 'loop',             # loop, transition, content, etc
                 'start': 0.0,               # if omitted, assumes 0
                 'length': 0.0,              # if omitted, assumes len(filename)
                 'disabled': True,           # if omitted, assumes False
@@ -85,18 +85,22 @@ class VideoThread(threading.Thread):
             raise ValueError(self._example)
         for video in self.playlist:
             if not self.stopped():
-                self.__debug_("Starting:", video['name'])
                 self.__start_video__(video)
 
     def __start_video__(self, video):
         """Starts a video. Takes a video object """
         if not isinstance(video, dict):
             raise ValueError(self._example)
+        if 'name' in video:
+            name = video['name']
+        else:
+            name = video['file']
         if 'disabled' in video and video['disabled']:
-            self.__debug_("not played:", video['name'], "disabled")
+            self.__debug_("not played:", name, "disabled")
             return
+        self.__debug_("Starting:", name)
         # get length
-        if ('length' in video and (video['length'] != 0.0 or video['type'] == 'loop')):
+        if ('length' in video and (video['length'] != 0.0 or 'loop' in video['tags'])):
             length = video['length']
         else:
             length = self.__get_length__(video['file'])
@@ -106,26 +110,26 @@ class VideoThread(threading.Thread):
         else:
             start = 0.0
         # if start is too large, set it to 0 (unless type=loop)
-        if (video['type'] != 'loop' and start >= length):
+        if ('loop' not in video['tags'] and start >= length):
             start = 0.0
         # store this for later
         self._current_video = video
         # debugging output
-        self.__debug_("name: %s (%s)" %  (video['name'], video['file']))
-        self.__debug_("type: %s, start: %.1fs, end: %.1fs, len: %.1fs" %
-                      (video['type'], start, start+length, length))
+        self.__debug_("name: %s (%s)" %  (name, video['file']))
+        self.__debug_("tags: %s, start: %.1fs, end: %.1fs, len: %.1fs" %
+                      (str(video['tags']), start, start+length, length))
         # construct the player command
-        if (video['type'] == 'loop'):
+        if ('loop' in video['tags']):
             my_cmd = " ".join(LOOP_CMD + [video['file']])
-        elif (video['type'] == 'transition'):
+        elif ('transition' in video['tags']):
             my_cmd = " ".join(TRANSITION_CMD + ['--pos', str(start), video['file']])
-        elif (video['type'] == 'content'):
+        else:
             my_cmd = " ".join(CONTENT_CMD + ['--pos', str(start), video['file']])
         self.__debug_("cmd:", my_cmd, l=2)
         # launch the player, saving the process handle
         # TODO: after debugging, replace 'if True' with 'try' and enable 'except'
-        if True:
-        # try:
+        #if True:
+        try:
             proc = None
             if (self._debug >= 3):
                 proc = subprocess.Popen(my_cmd, shell=True, preexec_fn=os.setsid, stdin=nullin)
@@ -134,23 +138,23 @@ class VideoThread(threading.Thread):
             # save this process group id
             pgid = os.getpgid(proc.pid)
             self._player_pgid = pgid 
-            self.__debug_("Starting process: %i (%s)" % (pgid, video['name']))
+            self.__debug_("Starting process: %i (%s)" % (pgid, name))
             # wait in a tight loop, checking if we've received stop event or time is over
             start_time = time.time()
             while (not self.stopped() and 
                    (time.time() <= start_time + length - INTER_VIDEO_DELAY)):
                 pass
             # If type=loop and length=0, loop forever
-            if (video['type'] == 'loop' and length == 0.0):
+            if ('loop' in video['tags'] and length == 0.0):
                 self.__debug_("Looping indefinitely for %i (%s)" % 
-                              (pgid, video['name']))
+                              (pgid, name))
             # otherwise, kill it
             else:
                 self.__debug_("setting %.2fs kill timer for %i (%s)" % 
-                              (INTER_VIDEO_DELAY, pgid, video['name']))
-                threading.Timer(INTER_VIDEO_DELAY, self.__stop_video__, [pgid, video['name']]).start()
-        # except:
-        #     self.__debug_("Unable to start video", video['name'], l=0)
+                              (INTER_VIDEO_DELAY, pgid, name))
+                threading.Timer(INTER_VIDEO_DELAY, self.__stop_video__, [pgid, name]).start()
+        except:
+            self.__debug_("Unable to start video", name, l=0)
 
     def __stop_video__(self, pgid, name):
         try:
@@ -168,15 +172,13 @@ class VideoThread(threading.Thread):
 
 def main():
     films = [
-        {'name': "test-loop",
-            'file': "test-loop.mp4",
-            'type': 'loop',
-            'length': 0,
+        {'file': "test-loop.mp4",
+         'tags': 'loop',
          },
         {'name': "test-content",
-            'file': "test-content.mp4",
-            'type': 'content',
-            'length': 10.0,
+         'file': "test-content.mp4",
+         'tags': 'content',
+         'length': 10.0,
          },
         ]
     print "Starting threaded sequence"
