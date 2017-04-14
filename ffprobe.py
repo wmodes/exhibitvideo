@@ -10,6 +10,7 @@
 
 import subprocess as sp
 import json
+from common import *
 
 
 def probe(vid_file_path):
@@ -18,7 +19,7 @@ def probe(vid_file_path):
     @vid_file_path : The absolute (full) path of the video file, string.
     '''
     if type(vid_file_path) != str:
-        raise Exception('Gvie ffprobe a full file path of the video')
+        debug(vid_file_path, 'Give ffprobe a full file path of the video')
         return
 
     command = ["ffprobe",
@@ -51,7 +52,7 @@ def duration(vid_file_path):
 
     # if everything didn't happen,
     # we got here because no single 'return' in the above happen.
-    raise Exception('I found no duration')
+    debug(vid_file_path, 'I found no duration')
     #return None
 
 
