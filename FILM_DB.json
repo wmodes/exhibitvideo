@@ -1,0 +1,70 @@
+[ 
+  { "file" : "loop-idle1.mp4",
+    "type" : "loop"
+  },
+  { "disabled" : true,
+    "file" : "loop-under-construction.mp4",
+    "type" : "loop"
+  },
+  { "file" : "tv-color-bars-distorted.mp4",
+    "length" : 1.0,
+    "type" : "transition"
+  },
+  { "disabled" : true,
+    "file" : "tv-color-bars.mp4",
+    "length" : 1.0,
+    "type" : "transition"
+  },
+  { "file" : "tv-color-calibration.mp4",
+    "length" : 1.0,
+    "type" : "transition"
+  },
+  { "file" : "tv-static-transition.mp4",
+    "length" : 1.0,
+    "type" : "transition"
+  },
+  { "file" : "content-remote1.mp4",
+    "length" : 45.0,
+    "trigger" : "remote",
+    "type" : "content",
+    "rfid" : "00:00:01:01:05:03:08:05:09:02"
+  },
+  { "file" : "content-remote1.mp4",
+    "length" : 45.0,
+    "start" : 45.0,
+    "trigger" : "remote",
+    "type" : "content",
+    "rfid" : "00:00:01:01:05:03:08:05:09:02"
+  },
+  { "file" : "content-remote1.mp4",
+    "length" : 45.0,
+    "start" : 90.0,
+    "trigger" : "remote",
+    "type" : "content",
+    "rfid" : "00:00:01:01:05:03:08:05:09:02"
+  },
+  { "file" : "content-remote1.mp4",
+    "length" : 45.0,
+    "start" : 135.0,
+    "trigger" : "remote",
+    "type" : "content",
+    "rfid" : "00:00:01:01:05:03:08:05:09:02"
+  },
+  { "file" : "content-hair1.mp4",
+    "length" : 45.0,
+    "trigger" : "hair",
+    "type" : "content",
+    "rfid" : "00:00:01:01:05:03:01:09:02:00"
+  },
+  { "file" : "content-phone1.mp4",
+    "length" : 51.0,
+    "trigger" : "phone",
+    "type" : "content",
+    "rfid" : "00:00:01:01:05:02:08:04:04:07"
+  },
+  { "file" : "1960s-cuba-family.mp4",
+    "length" : 20.0,
+    "trigger" : "default",
+    "type" : "content"
+  }
+]

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+    #!/usr/bin/python
 """exhibitvideo.py: play and manage threaded video as needed
 Author: Wes Modes (wmodes@gmail.com)
 Copyright: 2017, MIT """
@@ -7,13 +7,12 @@ Copyright: 2017, MIT """
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 from random import choice
-import threading
 import os
 from subprocess import call
 
 # local modules
 import videothread
-from video_db import *
+from config import *
 from common import *
 
 
