@@ -9,6 +9,7 @@ Copyright: 2017, MIT """
 from random import choice
 import os
 from subprocess import call
+from pprint import pformat
 
 # local modules
 import videothread
