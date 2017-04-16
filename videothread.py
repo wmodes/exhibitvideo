@@ -219,22 +219,26 @@ class VideoThread(threading.Thread):
 
 
 def main():
+    media_dir = "media"
     films = [
-        {'file': "test-loop.mp4",
-         'tags': 'loop',
-         },
-        {'name': "test-content",
-         'file': "test-content.mp4",
-         'tags': 'content',
-         'length': 10.0,
-         },
+          { "file" : "la_crosse_boathouses_loop.mp4",
+            "tags" : [ "loop" ],
+            "length" : 200
+          },
+          { "file" : "launch_party_timelapse.mp4",
+            "tags" : [ "feature" ]
+          },
+          { "file" : "secret_history_dorris_turner_what_does_the_river_mean_to_you.mp4",
+            "tags" : [ "interview" ]
+          },
         ]
-    print "Starting threaded sequence"
-    video = VideoThread([films[0], films[1]], debug=2)
-    video.start()
-    print "Sequence started"
-    raw_input("Press enter to kill video")
-    video.stop()
+    for film in films:
+        print "Starting threaded sequence"
+        video = VideoThread([film], media_dir, debug=2)
+        video.start()
+        print "Sequence started"
+        raw_input("Press enter to kill video")
+        video.stop()
 
 if __name__ == "__main__":
     main()

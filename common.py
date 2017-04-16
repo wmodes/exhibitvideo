@@ -9,6 +9,9 @@ Copyright: 2017, MIT"""
 from time import sleep, time
 import sys
 
+# local modules
+from config import *
+
 
 #
 # Globals
