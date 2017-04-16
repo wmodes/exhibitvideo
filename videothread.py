@@ -221,15 +221,17 @@ class VideoThread(threading.Thread):
 def main():
     media_dir = "media"
     films = [
-          { "file" : "la_crosse_boathouses_loop.mp4",
-            "tags" : [ "loop" ],
-            "length" : 200
-          },
           { "file" : "launch_party_timelapse.mp4",
-            "tags" : [ "feature" ]
+            "tags" : [ "feature" ],
+            "length" : 20,
           },
           { "file" : "secret_history_dorris_turner_what_does_the_river_mean_to_you.mp4",
-            "tags" : [ "interview" ]
+            "tags" : [ "interview" ],
+            "length" : 20,
+          },
+          { "file" : "la_crosse_boathouses_loop.mp4",
+            "tags" : [ "loop" ],
+            "length" : 200,
           },
         ]
     for film in films:
