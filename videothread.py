@@ -204,6 +204,8 @@ class VideoThread(threading.Thread):
         #     self._debug("Unable to start video", name, l=0)
 
     def wait_for_end(self):
+        """Wait for end of video in tight loop"""
+        debug("Waiting for end of video")
         while (not self.stopped() and
                (time.time() <= self._end_time)):
             pass
