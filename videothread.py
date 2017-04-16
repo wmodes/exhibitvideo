@@ -67,6 +67,7 @@ class VideoThread(threading.Thread):
         self._last_debug_caller = None
         self._current_video = None
         self._player_pgid = None
+        self._end_time = 0
 
     def set_sequence(self, playlist=None):
         self.playlist = playlist
@@ -191,13 +192,21 @@ class VideoThread(threading.Thread):
                             (length - INTER_VIDEO_DELAY, name, pgid))
             # wait in a tight loop, checking if we've received stop event or time is over
             start_time = time.time()
+            self._end_time = start_time + length - INTER_VIDEO_DELAY
+            # when we get close to the end, we release the thread to start new vid
             while (not self.stopped() and
-                   (time.time() <= start_time + length - INTER_VIDEO_DELAY)):
+                   (time.time() <= self._end_time)):
                 pass
+            # then we set a timer to kill the old vid
             threading.Timer(INTER_VIDEO_DELAY, 
                             self._stop_video, [pgid, name]).start()
         # except:
         #     self._debug("Unable to start video", name, l=0)
+
+    def wait_for_end(self):
+        while (not self.stopped() and
+               (time.time() <= self._end_time)):
+            pass
 
     def _stop_video(self, pgid, name):
         try:
@@ -237,7 +246,7 @@ def main():
         video = VideoThread([film], media_dir, debug=2)
         video.start()
         print "Sequence started"
-        raw_input("Press enter to kill video")
+        video.wait_for_end()
         video.stop()
 
 if __name__ == "__main__":
