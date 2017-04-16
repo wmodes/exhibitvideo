@@ -205,7 +205,11 @@ class VideoThread(threading.Thread):
 
     def wait_for_end(self):
         """Wait for end of video in tight loop"""
+        # wait until we get the timing info
+        while not self._end_time:
+            pass
         self._debug("Waiting for end of video")
+        # now wait until time expires
         while (not self.stopped() and
                (time.time() <= self._end_time)):
             pass
