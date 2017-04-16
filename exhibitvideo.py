@@ -31,13 +31,13 @@ from video import *
 def create_film_lists_dict(film_list):
     """Iterate through imported database and sort list by type"""
     film_lists_dict = {}
-    for film in films:
+    for film in film_list:
         if 'disabled' not in film or not film['disabled']:
             # make lists of film types
             # Note, that this means a film can be in several lists
             if 'tags' in film:
                 for tag in film['tags']:
-                    if tag not in film_lists: 
+                    if tag not in film_lists_dict: 
                         film_lists_dict[tag] = [film]
                     else:
                         film_lists_dict[tag].append(film)
@@ -59,7 +59,7 @@ def main():
         while True:
             this_recipe, duration = recipe_db[recipe_index]
             recipe_index += 1
-            if recipe_index >= len(recipe):
+            if recipe_index >= len(recipe_db):
                 recipe_index = 0
             # max_content = len(content_film_list)-1
             # print ""
@@ -73,13 +73,14 @@ def main():
             # else:
             #     continue
             if this_recipe in film_dict:
-                debug("Next recipe (%i): %s duration %s sec %i choices" % recipe_index,
-                      this_recipe, duration, len(film_dict[this_recipe]))
+                debug("Next recipe (%i): %s, duration %.2fs, %i choices" % (recipe_index,
+                      this_recipe, duration, len(film_dict[this_recipe])) )
                 content_film = choice(film_dict[this_recipe])
                 # if we have an override duration, add to film record
                 if duration:
                     content_film['length'] = duration
-                content_thread = videothread.VideoThread([content_film], MEDIA_BASE, debug=1)
+                debug("Selected film: %s" % content_film, debug=2)
+                content_thread = videothread.VideoThread([content_film], MEDIA_BASE, debug=DEBUG)
 
     except KeyboardInterrupt:
         print ""
