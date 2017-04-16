@@ -1,3 +1,9 @@
+# Local
+media/*
+!media/*.md
+!media/README*
+!media/README.md
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

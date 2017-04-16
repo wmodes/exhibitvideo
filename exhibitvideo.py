@@ -20,15 +20,15 @@ from config import *
 # Globals
 #
 
-film_lists = {}
 
 
 #
 # Preparatory
 #
 
-def create_film_lists():
+def create_film_lists_dict(film_list):
     """Iterate through imported database and sort list by type"""
+    film_lists_dict = {}
     for film in films:
         if 'disabled' not in film or not film['disabled']:
             # make lists of film types
@@ -36,21 +36,24 @@ def create_film_lists():
             if 'tags' in film:
                 for tag in film['tags']:
                     if tag not in film_lists: 
-                        film_lists[tag] = [film]
+                        film_lists_dict[tag] = [film]
                     else:
-                        film_lists[tag].append(film)
+                        film_lists_dict[tag].append(film)
+    return film_lists_dict
 
 #
 # Control
 #
 
 def main():
-    create_film_lists()
+    # setup everything
+    report("Reading film database")
+    film_list = read_film_file(MEDIA_BASE + '/' + FILMDB_FILE)
+    debug("\nfilm_list = \n", pformat(film_list), level=2)
+    film_dict = create_film_lists_dict(film_list)
+    debug("\nfilm_dict = \n", pformat(film_dict), level=2)
     recipe_index = 0
     try:
-        loop_film = choice(loop_film_list)
-        loop_thread = videothread.VideoThread([loop_film], debug=1)
-
         while True:
             this_recipe, duration = recipe_db[recipe_index]
             recipe_index += 1
@@ -67,10 +70,10 @@ def main():
             #     content_film = choice(content_film_dict[next_film])
             # else:
             #     continue
-            if this_recipe in film_lists:
+            if this_recipe in film_dict:
                 debug("Next recipe (%i): %s duration %s sec %i choices" % recipe_index,
-                      this_recipe, duration, len(film_lists[this_recipe]))
-                content_film = choice(film_lists[this_recipe])
+                      this_recipe, duration, len(film_dict[this_recipe]))
+                content_film = choice(film_dict[this_recipe])
                 # if we have an override duration, add to film record
                 if duration:
                     content_film['length'] = duration
