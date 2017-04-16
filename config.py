@@ -19,14 +19,14 @@ recipe_db = [
     ('loop', 120),
 
     ('feature', 0),
-    ('transition', 0),
+    ('scenic', 0),
 
     ('interview', 0),
     ('loop', 120),
 
     ('playful', 0),
-    ('transition', 0),
+    ('scenic', 0),
 
     ('interview', 0),
-    ('transition', 0),
+    ('scenic', 0),
 ]
