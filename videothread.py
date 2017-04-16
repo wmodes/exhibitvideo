@@ -16,15 +16,29 @@ import time
 # local imports
 import ffprobe
 
+#
+# constants
+#
+
 INTER_VIDEO_DELAY = 0.75
 
 OMX_CMD = ['omxplayer', '--no-osd', '--no-keys', '--refresh', '--aspect-mode fill']
-CONTENT_CMD = OMX_CMD + ['--layer 4', '--dbus_name', 'org.mpris.MediaPlayer2.omxplayer1']
-TRANSITION_CMD = OMX_CMD + ['--layer 5', '--dbus_name', 'org.mpris.MediaPlayer2.omxplayer2']
-LOOP_CMD = OMX_CMD + ['--layer 1', '--loop', '--dbus_name', 'org.mpris.MediaPlayer2.omxplayer3']
+CONTENT_CMD = OMX_CMD + ['--layer %i', '--dbus_name', 'org.mpris.MediaPlayer2.omxplayer%i']
+LOOP_CMD = OMX_CMD + ['--layer %i', '--loop', '--dbus_name', 'org.mpris.MediaPlayer2.omxplayer%i']
+TRANSITION_CMD = OMX_CMD + ['--layer %i', '--dbus_name', 'org.mpris.MediaPlayer2.omxplayer%i']
 
 nullin = open(os.devnull, 'r')
 nullout = open(os.devnull, 'w')
+
+#
+# globals
+#
+
+omx_layer_content = 1
+omx_layer_loop = 3
+omx_layer_transition = 5
+omx_player = 1
+
 
 
 class VideoThread(threading.Thread):
@@ -95,6 +109,7 @@ class VideoThread(threading.Thread):
     def _start_video(self, video):
         """Starts a video. Takes a video object """
         # add media_dir to filename
+        global omx_layer_content, omx_layer_loop, omx_layer_transition, omx_player
         filename = self.media_dir + '/' + video['file']
         # check to make sure we've passed the right thing
         if not isinstance(video, dict):
@@ -134,14 +149,24 @@ class VideoThread(threading.Thread):
         self._debug("name: %s (%s)" % (name, filename))
         self._debug("tags: %s" % video['tags'])
         self._debug("start: %.1fs, end: %.1fs, len: %.1fs" %
-                      (start, start+length, length))
-        # construct the player command
+                    (start, start+length, length))
+        # each time we switch to a new video, we switch the layer
+        # this will effectively toggle the 3 layer variables between (1,2), (3,4), and (5,6)
+        omx_layer_content = 1 if (omx_layer_content != 1) else 2
+        omx_layer_loop = 3 if (omx_layer_loop != 3) else 4
+        omx_layer_transition = 5 if (omx_layer_transition != 5) else 6
+        # we also toggle the virtual player
+        omx_player = 1 if (omx_player != 1) else 2
+        # build omxplayer command
         if ('loop' in video['tags']):
-            my_cmd = " ".join(LOOP_CMD + [filename])
+            my_cmd = " ".join(LOOP_CMD + [filename]) % 
+                              (omx_layer_loop, omx_player)
         elif ('transition' in video['tags']):
-            my_cmd = " ".join(TRANSITION_CMD + ['--pos', str(start), filename])
+            my_cmd = " ".join(TRANSITION_CMD + ['--pos', str(start), filename]) % 
+                              (omx_layer_transition, omx_player)
         else: 
-            my_cmd = " ".join(CONTENT_CMD + ['--pos', str(start), filename])
+            my_cmd = " ".join(CONTENT_CMD + ['--pos', str(start), filename]) % 
+                              (omx_layer_content, omx_player)
         self._debug("cmd:", my_cmd, l=2)
         # launch the player, saving the process handle
         # TODO: after debugging, replace 'if True' with 'try' and enable 'except'
