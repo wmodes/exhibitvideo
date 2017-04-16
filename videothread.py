@@ -45,8 +45,10 @@ class VideoThread(threading.Thread):
     def __init__(self, playlist=None, media_dir=".", debug=0):
         super(VideoThread, self).__init__()
         self._stop = threading.Event()
-        self.media_dir = media_dir
+        # passed parameters
         self.playlist = playlist
+        self.media_dir = media_dir
+        # internal flags and vars
         self._debug_flag = debug
         self._last_debug_caller = None
         self._current_video = None
@@ -92,16 +94,21 @@ class VideoThread(threading.Thread):
 
     def _start_video(self, video):
         """Starts a video. Takes a video object """
+        # add media_dir to filename
         filename = self.media_dir + '/' + video['file']
+        # check to make sure we've passed the right thing
         if not isinstance(video, dict):
             raise ValueError(self._example)
+        # set video name if we have it
         if 'name' in video:
             name = video['name']
         else:
             name = video['file']
+        # skip this video if disabled in db
         if 'disabled' in video and video['disabled']:
             self._debug("Not played:", name, "disabled")
             return
+        #debug messages
         self._debug("Starting %s in %s" % (name, self.media_dir))
         self._debug("Video data:", video)
         # get length
@@ -118,8 +125,8 @@ class VideoThread(threading.Thread):
         # if start is too large, set it to 0
         if (start >= filelength):
             start = 0.0
-        # if length is too large, scale it back
-        if (start + length >= filelength):
+        # if length is too large, scale it back, unless loop
+        if (('loop' not in video['tags']) and (start + length >= filelength)):
             length = filelength - start
         # store this for later
         self._current_video = video
@@ -149,20 +156,21 @@ class VideoThread(threading.Thread):
             pgid = os.getpgid(proc.pid)
             self._player_pgid = pgid
             self._debug("Starting process: %i (%s)" % (pgid, name))
-            # If tag=loop and length=0, loop forever
+            # If we have a loop
             if ('loop' in video['tags']):
-                self._debug("Looping indefinitely for %i (%s)" % (pgid, name))
-            # otherwise, wait and kill it
+                self._debug("Looping %.2fs and setting kill timer for %s (pid %i)" %
+                            (length - INTER_VIDEO_DELAY, name, pgid))
+            # otherwise
             else:
-                self._debug("Waiting %.2fs and setting kill timer for %i (%s)" %
-                            (length - INTER_VIDEO_DELAY, pgid, name))
-                # wait in a tight loop, checking if we've received stop event or time is over
-                start_time = time.time()
-                while (not self.stopped() and
-                       (time.time() <= start_time + length - INTER_VIDEO_DELAY)):
-                    pass
-                threading.Timer(INTER_VIDEO_DELAY, 
-                                self._stop_video, [pgid, name]).start()
+                self._debug("Waiting %.2fs and setting kill timer for %s (pid %i)" %
+                            (length - INTER_VIDEO_DELAY, name, pgid))
+            # wait in a tight loop, checking if we've received stop event or time is over
+            start_time = time.time()
+            while (not self.stopped() and
+                   (time.time() <= start_time + length - INTER_VIDEO_DELAY)):
+                pass
+            threading.Timer(INTER_VIDEO_DELAY, 
+                            self._stop_video, [pgid, name]).start()
         # except:
         #     self._debug("Unable to start video", name, l=0)
 
@@ -179,7 +187,7 @@ class VideoThread(threading.Thread):
     def _get_length(self, filename):
         self._debug("Getting duration of %s" % filename)
         length = ffprobe.duration(filename)
-        if length == None:
+        if length is None:
             length = 0
         return length
 

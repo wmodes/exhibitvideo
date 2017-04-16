@@ -1,70 +1,185 @@
 [ 
-  { "file" : "loop-idle1.mp4",
-    "type" : "loop"
+  { "file" : "Bacon Frying (Loop).mp4",
+    "tags" : [ "loop" ]
   },
-  { "disabled" : true,
-    "file" : "loop-under-construction.mp4",
-    "type" : "loop"
+  { "file" : "Crossing Bridge (Loop).mp4",
+    "tags" : [ "loop" ]
   },
-  { "file" : "tv-color-bars-distorted.mp4",
-    "length" : 1.0,
-    "type" : "transition"
+  { "file" : "Flowers and River (Loop).mp4",
+    "tags" : [ "loop" ]
   },
-  { "disabled" : true,
-    "file" : "tv-color-bars.mp4",
-    "length" : 1.0,
-    "type" : "transition"
+  { "file" : "Gentle waves and birdsong (Loop).mov",
+    "tags" : [ "loop" ]
   },
-  { "file" : "tv-color-calibration.mp4",
-    "length" : 1.0,
-    "type" : "transition"
+  { "file" : "Ice Fishing Shack on Lake Winona (Loop).mp4",
+    "tags" : [ "loop" ]
   },
-  { "file" : "tv-static-transition.mp4",
-    "length" : 1.0,
-    "type" : "transition"
+  { "file" : "La Crosse Boathouses (Loop).mp4",
+    "tags" : [ "loop" ]
   },
-  { "file" : "content-remote1.mp4",
-    "length" : 45.0,
-    "trigger" : "remote",
-    "type" : "content",
-    "rfid" : "00:00:01:01:05:03:08:05:09:02"
+  { "file" : "Launch Party Timelapse.mp4",
+    "tags" : [ "feature" ]
   },
-  { "file" : "content-remote1.mp4",
-    "length" : 45.0,
-    "start" : 45.0,
-    "trigger" : "remote",
-    "type" : "content",
-    "rfid" : "00:00:01:01:05:03:08:05:09:02"
+  { "file" : "peaceful morning in galena.MOV",
+    "tags" : [ "transition" ]
   },
-  { "file" : "content-remote1.mp4",
-    "length" : 45.0,
-    "start" : 90.0,
-    "trigger" : "remote",
-    "type" : "content",
-    "rfid" : "00:00:01:01:05:03:08:05:09:02"
+  { "file" : "Secret History - Dorris Turner - What does the river mean to you.mp4",
+    "tags" : [ "interview" ]
   },
-  { "file" : "content-remote1.mp4",
-    "length" : 45.0,
-    "start" : 135.0,
-    "trigger" : "remote",
-    "type" : "content",
-    "rfid" : "00:00:01:01:05:03:08:05:09:02"
+  { "file" : "Secret History - Edwin Hill - Abe Lincoln.mov",
+    "tags" : [ "interview" ]
   },
-  { "file" : "content-hair1.mp4",
-    "length" : 45.0,
-    "trigger" : "hair",
-    "type" : "content",
-    "rfid" : "00:00:01:01:05:03:01:09:02:00"
+  { "file" : "Secret History - Gerty Tonjum on River Time Final.mov",
+    "tags" : [ "interview" ]
   },
-  { "file" : "content-phone1.mp4",
-    "length" : 51.0,
-    "trigger" : "phone",
-    "type" : "content",
-    "rfid" : "00:00:01:01:05:02:08:04:04:07"
+  { "file" : "Secret History - Jessica Bierbrauer - Future River.mov",
+    "tags" : [ "interview" ]
   },
-  { "file" : "1960s-cuba-family.mp4",
-    "length" : 20.0,
-    "trigger" : "default",
-    "type" : "content"
+  { "file" : "Secret History - Jessica Bierbrauer - Lost History.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - John Sullivan - Fish Kills.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Kali Arlene - Future River.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Kali Arlene - Latsch Island.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Kali Arline - Flood Season.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Karen Galema - What does the river mean to you.mp4",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Ken Lubinski - Buck.mp4",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Ken Lubinski - Deer.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Ken Lubinski - Respect the River.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Lauren Donovan - Barges.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Lauren Donovan - Creeper Guy.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Lauren Donovan - Lock 11.mp4",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Lauren Donovan - River Life.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Pat Nunnally - Future River.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Pat Nunnally - River Ecology (Mayflies).mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Peter Rachleff - learn to listen.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Peter Rachleff - Lumber Mills.mp4",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Rat - Childhood.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Rat - Final Thoughts.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History - Rat - Mayfly.mov",
+    "tags" : [ "interview" ]
+  },
+  { "file" : "Secret History Trailer - Living on the River.mov",
+    "tags" : [ "feature" ]
+  },
+  { "file" : "Secret History Trailer - Saturday Mornings.mov",
+    "tags" : [ "feature" ]
+  },
+  { "file" : "Secret History Trailer - Shantytown.mp4",
+    "tags" : [ "feature" ]
+  },
+  { "file" : "Shantyboat Guys - Acrid Coffee (square).mov",
+    "tags" : [ "playful" ]
+  },
+  { "file" : "Shantyboat Guys - Bass Fishing.mov",
+    "tags" : [ "playful" ]
+  },
+  { "file" : "Shantyboat Guys - Beer or Coffee.mov",
+    "tags" : [ "playful" ]
+  },
+  { "file" : "Shantyboat Guys - Collisions On the High Seas (square).mov",
+    "tags" : [ "playful" ]
+  },
+  { "file" : "Shantyboat Guys - Dangerous Crossing (square).mov",
+    "tags" : [ "playful" ]
+  },
+  { "file" : "Shantyboat Guys - Gates of Hell (square).mp4",
+    "tags" : [ "playful" ]
+  },
+  { "file" : "Shantyboat Guys - NAFTA Drink.mov",
+    "tags" : [ "playful" ]
+  },
+  { "file" : "Shantyboat Guys - No Internet.mov",
+    "tags" : [ "playful" ]
+  },
+  { "file" : "Shantyboat Guys - Out of Coffee (square).mp4",
+    "tags" : [ "playful" ]
+  },
+  { "file" : "Shantyboat Guys - Out of Water (square).mov",
+    "tags" : [ "playful" ]
+  },
+  { "file" : "Shantyboat Guys - Wild Source Materials (square).mp4",
+    "tags" : [ "playful" ]
+  },
+  { "file" : "Shanytboat Sunny Window (Loop).mp4",
+    "tags" : [ "loop" ]
+  },
+  { "file" : "SHARP Leaving Deep Lock.mov",
+    "tags" : [ "transition" ]
+  },
+  { "file" : "SHARP Peaceful Morning Galena.mov",
+    "tags" : [ "transition" ]
+  },
+  { "file" : "SHARP Shantyboat Flyby Tenn R.mov",
+    "tags" : [ "feature" ]
+  },
+  { "file" : "SHARP Shantyboat Flyby Under Stormy Skies.mov",
+    "tags" : [ "feature" ]
+  },
+  { "file" : "SHARP Shantyboat in Lock.mov",
+    "tags" : [ "transition" ]
+  },
+  { "file" : "SHARP Shantyboat moving away from dock.mov",
+    "tags" : [ "transition" ]
+  },
+  { "file" : "SHARP Time-Lapse Choppy Crossing.mov",
+    "tags" : [ "transition" ]
+  },
+  { "file" : "SHARP Train Crossing River.mov",
+    "tags" : [ "transition" ]
+  },
+  { "file" : "SHARP TV Report 2014 La Crosse WI.mp4",
+    "tags" : [ "feature" ]
+  },
+  { "file" : "SHARP TV Report 2016 Huntsville AL.mp4",
+    "tags" : [ "feature" ]
+  },
+  { "file" : "SHARP Visitor Playing Banjo 1.mov",
+    "tags" : [ "feature" ]
+  },
+  { "file" : "SHARP WebDoc PoV Teaser Trailer.mov",
+    "tags" : [ "feature" ]
+  },
+  { "file" : "Sunset on the Delta.mov",
+    "tags" : [ "feature" ]
+  },
+  { "file" : "Walking on the Frozen River (Loop).mp4",
+    "tags" : [ "loop" ]
   }
 ]

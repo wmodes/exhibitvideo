@@ -11,6 +11,7 @@
 import subprocess as sp
 import json
 from common import *
+from config import *
 
 
 def probe(vid_file_path):

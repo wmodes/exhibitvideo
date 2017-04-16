@@ -9,12 +9,6 @@ Copyright: 2017, MIT"""
 from time import sleep, time
 import sys
 
-#
-# Constants
-#
-DEBUG = 2
-MEDIA_BASE = 'media'
-FILMDB_FILE = 'FILM_DB.json'
 
 #
 # Globals
