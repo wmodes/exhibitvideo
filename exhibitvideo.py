@@ -80,7 +80,9 @@ def main():
                 if duration:
                     content_film['length'] = duration
                 debug("Selected film: %s" % content_film, debug=2)
-                content_thread = videothread.VideoThread([content_film], MEDIA_BASE, debug=DEBUG)
+                content_thread = videothread.VideoThread([content_film], MEDIA_BASE, debug=DEBUG) 
+                content_thread.start()
+                content_thread.wait_for_end()
 
     except KeyboardInterrupt:
         print ""

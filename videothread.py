@@ -255,7 +255,6 @@ def main():
         video.start()
         print "Sequence started"
         video.wait_for_end()
-        video.stop()
 
 if __name__ == "__main__":
     main()
