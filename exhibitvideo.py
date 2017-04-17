@@ -23,7 +23,6 @@ from video import *
 #
 last_thread = None
 
-
 #
 # Preparatory
 #
