@@ -7,7 +7,7 @@ Copyright: 2017, MIT """
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 
-DEBUG = 2
+DEBUG = 1
 MEDIA_BASE = 'media'
 FILMDB_FILE = 'FILM_DB.json'
 
