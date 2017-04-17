@@ -21,7 +21,7 @@ from video import *
 #
 # Globals
 #
-
+last_thread = None
 
 
 #
@@ -81,9 +81,15 @@ def main():
                     content_film['length'] = duration
                 debug("Selected film: %s" % content_film, debug=2)
                 content_thread = videothread.VideoThread([content_film], MEDIA_BASE, debug=DEBUG) 
+                # store this handle for later
+                last_thread = content_thread
+                # start new video
                 content_thread.start()
+                # kill the previous one if it is still around
+                if last_thread:
+                    last_thread.stop()
+                # now wait synchronously for end of video
                 content_thread.wait_for_end()
-                content.stop()
 
     except KeyboardInterrupt:
         print ""
