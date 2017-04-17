@@ -83,11 +83,11 @@ def main():
                 content_thread = videothread.VideoThread([content_film], MEDIA_BASE, debug=DEBUG) 
                 # start new video
                 content_thread.start()
-                # kill the previous one if it is still around
-                if last_thread:
-                    last_thread.stop()
-                # store current handle for later
-                last_thread = content_thread
+                # # kill the previous one if it is still around
+                # if last_thread:
+                #     last_thread.stop()
+                # # store current handle for later
+                # last_thread = content_thread
                 # now wait synchronously for end of video
                 content_thread.wait_for_end()
 
