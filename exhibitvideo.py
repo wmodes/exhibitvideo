@@ -83,6 +83,7 @@ def main():
                 content_thread = videothread.VideoThread([content_film], MEDIA_BASE, debug=DEBUG) 
                 content_thread.start()
                 content_thread.wait_for_end()
+                content.stop()
 
     except KeyboardInterrupt:
         print ""

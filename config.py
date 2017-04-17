@@ -17,12 +17,14 @@ FILMDB_FILE = 'FILM_DB.json'
 recipe_db = [
     ('interview', 0),
     ('loop', 120),
+    ('title', 0),
 
     ('feature', 0),
     ('scenic', 0),
 
     ('interview', 0),
     ('loop', 120),
+    ('title', 0),
 
     ('playful', 0),
     ('scenic', 0),
