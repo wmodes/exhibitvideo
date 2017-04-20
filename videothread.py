@@ -164,11 +164,14 @@ class VideoThread(threading.Thread):
         self._debug("cmd:", my_cmd, l=2)
         # launch the player, saving the process handle
         # TODO: after debugging, replace 'if True' with 'try' and enable 'except'
-        if True:
-        # try:
+        #if True:
+        try:
             proc = None
             if (self._debug_flag >= 3):
                 proc = subprocess.Popen(my_cmd, shell=True, preexec_fn=os.setsid, stdin=nullin)
+                # TODO: Figure out way that we can save the output to out debug file
+                # can't do it without changes since communicate waits for end of process
+                # out, err = proc.communicate()
             else:
                 proc = subprocess.Popen(my_cmd, shell=True, preexec_fn=os.setsid, stdin=nullin, stdout=nullout)
             # save this process group id
@@ -193,8 +196,8 @@ class VideoThread(threading.Thread):
             # then we set a timer to kill the old vid
             threading.Timer(config.inter_video_delay, 
                             self._stop_video, [pgid, name]).start()
-        # except:
-        #     self._debug("Unable to start video", name, l=0)
+        except Exception as e:
+             self._debug("Error starting omxplayer for %s\n%s" % (name, str(e)))
 
     def wait_for_end(self):
         """Wait for end of video in tight loop"""
@@ -214,7 +217,7 @@ class VideoThread(threading.Thread):
             self._player_pgid = None
             self._current_video = None
         except OSError, e:
-            self._debug("Couldn't terminate %i (%s)\n%s" % (pgid, name, e))
+            self._debug("Couldn't terminate %s (pid %i)\n%s" % (name, pgid, str(e)))
             pass
 
     def _get_length(self, filename):
