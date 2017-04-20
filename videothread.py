@@ -12,6 +12,7 @@ import sys
 import signal
 import os
 import time
+from time import sleep, time
 
 # local imports
 import ffprobe
