@@ -94,9 +94,11 @@ class VideoThread(threading.Thread):
             # get name of calling function
             caller = sys._getframe(1).f_code.co_name
             if (caller == self._last_debug_caller):
-                print "  debug: %s: %s" % (caller, text)
+                #print "  debug: %s: %s" % (caller, text)
+                logging.info("  debug: %s: %s" % (caller, text))
             else:
-                print "debug: %s: %s" % (caller, text)
+                #print "debug: %s: %s" % (caller, text)
+                logging.info("debug: %s: %s" % (caller, text))
             # save last calling function
             self._last_debug_caller = caller
 
