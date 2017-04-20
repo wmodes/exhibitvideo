@@ -18,12 +18,6 @@ import ffprobe
 from common import *
 import config
 
-
-OMX_CMD = ['omxplayer', '--no-osd', '--no-keys', '--refresh', '--aspect-mode letterbox']
-CONTENT_CMD = OMX_CMD + ['--layer %i', '--dbus_name', 'org.mpris.MediaPlayer2.omxplayer%i']
-LOOP_CMD = OMX_CMD + ['--layer %i', '--loop', '--dbus_name', 'org.mpris.MediaPlayer2.omxplayer%i']
-TRANSITION_CMD = OMX_CMD + ['--layer %i', '--dbus_name', 'org.mpris.MediaPlayer2.omxplayer%i']
-
 nullin = open(os.devnull, 'r')
 nullout = open(os.devnull, 'w')
 
@@ -159,14 +153,14 @@ class VideoThread(threading.Thread):
         omx_player = 1 if (omx_player != 1) else 2
         # build omxplayer command
         if ('loop' in video['tags']):
-            my_cmd = " ".join(LOOP_CMD + [filename]) % (omx_layer_loop, 
-                              omx_player)
+            my_cmd = " ".join(config.loop_cmd + [filename]) % 
+                              (omx_layer_loop, omx_player)
         elif ('transition' in video['tags']):
-            my_cmd = " ".join(TRANSITION_CMD + ['--pos', str(start), filename]) % (omx_layer_transition, 
-                              omx_player)
+            my_cmd = " ".join(config.transition_cmd + ['--pos', str(start), filename]) % 
+                              (omx_layer_transition, omx_player)
         else: 
-            my_cmd = " ".join(CONTENT_CMD + ['--pos', str(start), filename]) % (omx_layer_content, 
-                              omx_player)
+            my_cmd = " ".join(config.content_cmd + ['--pos', str(start), filename]) % 
+                              (omx_layer_content, omx_player)
         self._debug("cmd:", my_cmd, l=2)
         # launch the player, saving the process handle
         # TODO: after debugging, replace 'if True' with 'try' and enable 'except'
