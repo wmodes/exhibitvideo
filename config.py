@@ -7,7 +7,7 @@ Copyright: 2017, MIT """
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 
-debug = 2
+debug = 3
 media_base = 'media'
 filmdb = 'FILM_DB.json'
 logfile = '/var/log/exhibitvideo/exhibitvideo.log'
