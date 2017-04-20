@@ -11,7 +11,7 @@ debug = 2
 media_base = 'media'
 filmdb = 'FILM_DB.json'
 logfile = '/var/log/exhibitvideo/exhibitvideo.log'
-
+inter_video_delay = 0.75
 
 # A recipe for film sequencing - a list of tuples (<tag>, <length>)
 # note length here, overrides db values, and 0 takes db value

@@ -17,12 +17,8 @@ import logging
 # local imports
 import ffprobe
 import common
+import config
 
-#
-# constants
-#
-
-INTER_VIDEO_DELAY = 0.75
 
 OMX_CMD = ['omxplayer', '--no-osd', '--no-keys', '--refresh', '--aspect-mode letterbox']
 CONTENT_CMD = OMX_CMD + ['--layer %i', '--dbus_name', 'org.mpris.MediaPlayer2.omxplayer%i']
@@ -189,20 +185,20 @@ class VideoThread(threading.Thread):
             # If we have a loop
             if ('loop' in video['tags']):
                 self._debug("Looping %.2fs and setting kill timer for %s (pid %i)" %
-                            (length - INTER_VIDEO_DELAY, name, pgid))
+                            (length - config.inter_video_delay, name, pgid))
             # otherwise
             else:
                 self._debug("Waiting %.2fs and setting kill timer for %s (pid %i)" %
-                            (length - INTER_VIDEO_DELAY, name, pgid))
+                            (length - config.inter_video_delay, name, pgid))
             # wait in a tight loop, checking if we've received stop event or time is over
             start_time = time.time()
-            self._end_time = start_time + length - INTER_VIDEO_DELAY
+            self._end_time = start_time + length - config.inter_video_delay
             # when we get close to the end, we release the thread to start new vid
             while (not self.stopped() and
                    (time.time() <= self._end_time)):
                 pass
             # then we set a timer to kill the old vid
-            threading.Timer(INTER_VIDEO_DELAY, 
+            threading.Timer(config.inter_video_delay, 
                             self._stop_video, [pgid, name]).start()
         # except:
         #     self._debug("Unable to start video", name, l=0)
