@@ -14,6 +14,7 @@ __license__ = "MIT"
 from time import sleep, time
 import sys
 import logging
+import warnings
 
 # local modules
 import config
