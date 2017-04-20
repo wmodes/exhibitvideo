@@ -11,7 +11,6 @@ import subprocess
 import sys
 import signal
 import os
-import time
 from time import sleep, time
 
 # local imports
@@ -191,11 +190,11 @@ class VideoThread(threading.Thread):
                 self._debug("Waiting %.2fs and setting kill timer for %s (pid %i)" %
                             (length - config.inter_video_delay, name, pgid))
             # wait in a tight loop, checking if we've received stop event or time is over
-            start_time = time.time()
+            start_time = time()
             self._end_time = start_time + length - config.inter_video_delay
             # when we get close to the end, we release the thread to start new vid
             while (not self.stopped() and
-                   (time.time() <= self._end_time)):
+                   (time() <= self._end_time)):
                 pass
             # then we set a timer to kill the old vid
             threading.Timer(config.inter_video_delay, 
@@ -211,7 +210,7 @@ class VideoThread(threading.Thread):
         #self._debug("Waiting for end of video")
         # now wait until time expires
         while (not self.stopped() and
-               (time.time() <= self._end_time)):
+               (time() <= self._end_time)):
             pass
 
     def _stop_video(self, pgid, name):
