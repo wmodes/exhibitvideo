@@ -12,6 +12,7 @@ import sys
 import signal
 import os
 import time
+import logging
 
 # local imports
 import ffprobe
