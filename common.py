@@ -6,6 +6,11 @@ Copyright: 2017, MIT"""
 # -*- coding: iso-8859-15 -*-
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
+__appname__ = "exhibitvideo.py"
+__author__  = "Wes Modes <wmodes@gmail.com>"
+__version__ = "1.0pre0"
+__license__ = "MIT"
+
 from time import sleep, time
 import sys
 import logging
