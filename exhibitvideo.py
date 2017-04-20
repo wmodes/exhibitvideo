@@ -49,17 +49,18 @@ def create_film_lists_dict(film_list):
 def main():
     global last_thread
     # setup everything
+    report("Starting exhibitvideo")
     report("Reading film database")
-    film_list = read_film_file(MEDIA_BASE + '/' + FILMDB_FILE)
+    film_list = read_film_file(config.media_base + '/' + config.filmdb)
     debug("\nfilm_list = \n", pformat(film_list), level=2)
     film_dict = create_film_lists_dict(film_list)
     debug("\nfilm_dict = \n", pformat(film_dict), level=2)
     recipe_index = 0
     try:
         while True:
-            this_recipe, duration = recipe_db[recipe_index]
+            this_recipe, duration = config.recipedb[recipe_index]
             recipe_index += 1
-            if recipe_index >= len(recipe_db):
+            if recipe_index >= len(config.recipedb):
                 recipe_index = 0
             # max_content = len(content_film_list)-1
             # print ""
@@ -80,7 +81,7 @@ def main():
                 if duration:
                     content_film['length'] = duration
                 debug("Selected film: %s" % content_film, debug=2)
-                content_thread = videothread.VideoThread([content_film], MEDIA_BASE, debug=DEBUG) 
+                content_thread = videothread.VideoThread([content_film], config.media_base, debug=config.debug) 
                 # start new video
                 content_thread.start()
                 # # kill the previous one if it is still around
