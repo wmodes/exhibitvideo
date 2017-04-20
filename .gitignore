@@ -4,6 +4,7 @@ media/*
 !media/README*
 !media/README.md
 .*.swp
+nohup.out
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
