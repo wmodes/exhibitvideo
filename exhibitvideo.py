@@ -14,7 +14,7 @@ from pprint import pformat
 # local modules
 import videothread
 from common import *
-from config import *
+import config
 from video import *
 
 

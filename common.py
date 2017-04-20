@@ -16,7 +16,7 @@ import sys
 import logging
 
 # local modules
-from config import *
+import config
 
 
 #
