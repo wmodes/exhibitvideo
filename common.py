@@ -8,6 +8,7 @@ Copyright: 2017, MIT"""
 
 from time import sleep, time
 import sys
+import logging
 
 # local modules
 from config import *
@@ -31,11 +32,19 @@ debug_interval = 1
 # last function that called debug
 debug_last_caller = ""
 
+# create logger 
+logger = logging.getLogger(__appname__)
+logging.basicConfig(filename=config.logfile, level=logging.DEBUG,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+warnings.filterwarnings('ignore')
+
 def report(*args):
     """immediately report information.
     Note: Accepts multiple arguments"""
     text = " ".join(list(map(str, args)))
-    print text
+    #print text
+    logging.info(text)
 
 
 def debug(*args, **kargs):
@@ -45,7 +54,7 @@ def debug(*args, **kargs):
         level = kargs['level']
     else:
         level = 1
-    if (level <= DEBUG):
+    if (level <= config.debug):
         text = " ".join(list(map(str, args)))
         caller = sys._getframe(1).f_code.co_name
         # if now is greater than our last debug time + an interval

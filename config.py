@@ -7,14 +7,15 @@ Copyright: 2017, MIT """
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 
-DEBUG = 1
-MEDIA_BASE = 'media'
-FILMDB_FILE = 'FILM_DB.json'
+debug = 2
+media_base = 'media'
+filmdb = 'FILM_DB.json'
+logfile = '/var/log/exhibitvideo/exhibitvideo.log'
 
 
 # A recipe for film sequencing - a list of tuples (<tag>, <length>)
 # note length here, overrides db values, and 0 takes db value
-recipe_db = [
+recipedb = [
     ('interview', 0),
     ('loop', 120),
     ('title', 0),

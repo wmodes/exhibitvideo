@@ -215,8 +215,8 @@ class VideoThread(threading.Thread):
             pass
 
     def _stop_video(self, pgid, name):
+        self._debug("Sending SIGTERM to process %i (%s)" % (pgid, name))
         try:
-            self._debug("Killing process %i (%s)" % (pgid, name))
             os.killpg(pgid, signal.SIGTERM)
             self._player_pgid = None
             self._current_video = None

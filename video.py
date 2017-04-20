@@ -85,7 +85,7 @@ def create_film_lists_dict(film_list):
     """Iterate through imported database and sort list by type"""
     film_dict = {}
     for film in film_list:
-        filename = MEDIA_BASE + '/' + film['file']
+        filename = config.media_base + '/' + film['file']
         if 'name' in film:
             name = film['name']
         else:
@@ -148,12 +148,12 @@ def get_duration(filename):
 
 def main():
     global film_db
-    film_db = read_film_file(MEDIA_BASE + '/' + FILMDB_FILE)
+    film_db = read_film_file(config.media_base + '/' + config.filmdb)
     create_film_lists()
     create_content_dict()
     try:
         loop_film = choice(loop_film_list)
-        loop_thread = videothread.VideoThread([loop_film], media_dir=MEDIA_BASE, debug=DEBUG)
+        loop_thread = videothread.VideoThread([loop_film], media_dir=config.media_base, debug=config.debug)
 
         while True:
             max_content = len(content_film_list)-1
@@ -170,7 +170,7 @@ def main():
             trans1_film = choice(transition_film_list)
             trans2_film = choice(transition_film_list)
             content_thread = videothread.VideoThread([trans1_film, content_film, trans2_film], 
-                        media_dir=MEDIA_BASE, debug=DEBUG)
+                        media_dir=config.media_base, debug=config.debug)
 
     except KeyboardInterrupt:
         print ""
