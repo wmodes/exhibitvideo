@@ -50,7 +50,7 @@ def report(*args):
     Note: Accepts multiple arguments"""
     text = " ".join(list(map(str, args)))
     #print text
-    logging.info(text)
+    logger.info(text)
 
 
 def debug(*args, **kargs):

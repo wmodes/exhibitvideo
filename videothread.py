@@ -12,11 +12,10 @@ import sys
 import signal
 import os
 import time
-import logging
 
 # local imports
 import ffprobe
-import common
+from common import *
 import config
 
 
@@ -93,10 +92,10 @@ class VideoThread(threading.Thread):
             caller = sys._getframe(1).f_code.co_name
             if (caller == self._last_debug_caller):
                 #print "  debug: %s: %s" % (caller, text)
-                logging.info("  debug: %s: %s" % (caller, text))
+                logger.info("  debug: %s: %s" % (caller, text))
             else:
                 #print "debug: %s: %s" % (caller, text)
-                logging.info("debug: %s: %s" % (caller, text))
+                logger.info("debug: %s: %s" % (caller, text))
             # save last calling function
             self._last_debug_caller = caller
 
@@ -220,8 +219,8 @@ class VideoThread(threading.Thread):
             os.killpg(pgid, signal.SIGTERM)
             self._player_pgid = None
             self._current_video = None
-        except OSError:
-            self._debug("Couldn't terminate %i (%s)" % (pgid, name))
+        except OSError, e:
+            self._debug("Couldn't terminate %i (%s)\n%s" % (pgid, name, e))
             pass
 
     def _get_length(self, filename):
