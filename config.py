@@ -13,8 +13,8 @@ filmdb = 'FILM_DB.json'
 logfile = '/var/log/exhibitvideo/exhibitvideo.log'
 inter_video_delay = 0.25
 
-#omx_cmd = ['omxplayer', '--no-osd', '--no-keys', '--refresh', '--aspect-mode stretch']
-omx_cmd = ['omxplayer', '--no-osd', '--no-keys', '--refresh']
+omx_cmd = ['omxplayer', '--no-osd', '--no-keys', '--refresh', '--aspect-mode stretch']
+#omx_cmd = ['omxplayer', '--no-osd', '--no-keys', '--refresh']
 content_cmd = omx_cmd + ['--layer %i', '--dbus_name', 'org.mpris.MediaPlayer2.omxplayer%i']
 loop_cmd = omx_cmd + ['--layer %i', '--loop', '--dbus_name', 'org.mpris.MediaPlayer2.omxplayer%i']
 transition_cmd = omx_cmd + ['--layer %i', '--dbus_name', 'org.mpris.MediaPlayer2.omxplayer%i']
