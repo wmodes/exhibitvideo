@@ -166,11 +166,11 @@ class VideoThread(threading.Thread):
         # TODO: after debugging, replace 'if True' with 'try' and enable 'except'
         #if True:
         try:
-            proc = None
-            proc = subprocess.Popen(my_cmd, shell=True, preexec_fn=os.setsid, stdin=nullin, 
+            process = None
+            process = subprocess.Popen(my_cmd, shell=True, preexec_fn=os.setsid, stdin=nullin, 
                                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
            # save this process group id
-            pgid = os.getpgid(proc.pid)
+            pgid = os.getpgid(process.pid)
             self._player_pgid = pgid
             self._debug("Starting process: %i (%s)" % (pgid, name))
             # If we have a loop
