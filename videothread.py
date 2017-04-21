@@ -97,7 +97,7 @@ class VideoThread(threading.Thread):
         if not isinstance(self.video, dict):
             raise ValueError(self._example)
         if not self.stopped():
-            self._start_video(video)
+            self._start_video(self.video)
 
     def _start_video(self, video):
         """Starts a video. Takes a video object """
