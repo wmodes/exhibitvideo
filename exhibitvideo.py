@@ -92,7 +92,8 @@ def main():
                 # now wait synchronously for end of video
                 content_thread.wait_for_end()
 
-    except KeyboardInterrupt:
+    except Exception, e:
+        debug("Encountered exception: %s" % str(e))
         print ""
         print "Done."
         nullin = open(os.devnull, 'r')
