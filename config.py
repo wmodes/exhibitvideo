@@ -23,17 +23,17 @@ transition_cmd = omx_cmd + ['--layer %i', '--dbus_name', 'org.mpris.MediaPlayer2
 # note length here, overrides db values, and 0 takes db value
 recipedb = [
     ('interview', 0),
-    ('loop', 120),
+    ('loop', 60),
     ('title', 0),
 
     ('feature', 0),
     ('scenic', 0),
 
     ('interview', 0),
-    ('loop', 120),
+    ('loop', 60),
     ('title', 0),
 
-    ('playful', 0),
+    # ('playful', 0),
     ('scenic', 0),
 
     ('interview', 0),
