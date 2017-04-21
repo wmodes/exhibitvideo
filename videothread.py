@@ -167,7 +167,7 @@ class VideoThread(threading.Thread):
         try:
             process = None
             process = subprocess.Popen(my_cmd, shell=True, preexec_fn=os.setsid, stdin=nullin, 
-                                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
            # save this process group id
             pgid = os.getpgid(process.pid)
             self._player_pgid = pgid
@@ -182,22 +182,24 @@ class VideoThread(threading.Thread):
                             (length - config.inter_video_delay, name, pgid))
             # wait in a tight loop, checking if we've received stop event or time is over
             start_time = time()
-            self._end_time = start_time + length - config.inter_video_delay
+            self._end_time = start_time + length
             # when we get close to the end, we release the thread to start new vid
             while (not self.stopped() and
                    (time() <= self._end_time)):
                 pass
             # we kill the old vid
             self._stop_video(pgid, name)
+            # Wait until process terminates (without using p.wait())
+            # while process.poll() is None:
+            #     # Process hasn't exited yet, let's wait some
+            #     time.sleep(0.5)
             # was starting omxplayer even successful?
-            # note that communicate() will wait until the process ends
             stdoutdata, stderrdata = process.communicate()
             returncode = process.returncode
             # if the process failed, let's log the output
-            if returncode:
+            if (returncode != 0):
                 self._debug("Error starting omxplayer for %s\n%s\n%s" % \
                             (name, str(stdoutdata), str(stderrdata)))
-
         except Exception as e:
              self._debug("Error starting omxplayer for %s\n%s" % (name, str(e)))
 
