@@ -81,7 +81,7 @@ def main():
                 if duration:
                     content_film['length'] = duration
                 debug("Selected film: %s" % content_film, debug=2)
-                content_thread = videothread.VideoThread([content_film], config.media_base, debug=config.debug) 
+                content_thread = videothread.VideoThread(content_film, config.media_base, debug=config.debug) 
                 # start new video
                 content_thread.start()
                 # # kill the previous one if it is still around

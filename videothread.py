@@ -36,22 +36,22 @@ class VideoThread(threading.Thread):
     """Thread class with a stop() method. The thread itself checks
     regularly for the stopped() condition."""
     _example = """
-        The class takes a list containing one or more dictionaries containing
+        The class takes a a dictionary containing
         data about the videos to be played:
-            [{'name': "loop-idle1",         # if omitted, uses 'file'
+            {'name': "loop-idle1",         # if omitted, uses 'file'
                 'file': "loop-idle1.mp4",   # looks in 'mediabase' for media
                 'tags': 'loop',             # loop, transition, content, etc
                 'start': 0.0,               # if omitted, assumes 0
                 'length': 0.0,              # if omitted, assumes duration(filename)
                 'disabled': True,           # if omitted, assumes False
-             },]
+             }
         """
 
-    def __init__(self, playlist=None, media_dir=".", debug=0):
+    def __init__(self, video=None, media_dir=".", debug=0):
         super(VideoThread, self).__init__()
         self._stop = threading.Event()
         # passed parameters
-        self.playlist = playlist
+        self.video = video
         self.media_dir = media_dir
         # internal flags and vars
         self._debug_flag = debug
@@ -60,8 +60,8 @@ class VideoThread(threading.Thread):
         self._player_pgid = None
         self._end_time = 0
 
-    def set_sequence(self, playlist=None):
-        self.playlist = playlist
+    def set_sequence(self, video=None):
+        self.video = video
 
     def stop(self):
         self._debug("Stop flag set")
@@ -94,11 +94,10 @@ class VideoThread(threading.Thread):
             self._last_debug_caller = caller
 
     def run(self):
-        if not isinstance(self.playlist, list):
+        if not isinstance(self.video, dict):
             raise ValueError(self._example)
-        for video in self.playlist:
-            if not self.stopped():
-                self._start_video(video)
+        if not self.stopped():
+            self._start_video(video)
 
     def _start_video(self, video):
         """Starts a video. Takes a video object """
@@ -188,18 +187,17 @@ class VideoThread(threading.Thread):
             while (not self.stopped() and
                    (time() <= self._end_time)):
                 pass
+            # we kill the old vid
+            self._stop_video(pgid, name)
             # was starting omxplayer even successful?
             # note that communicate() will wait until the process ends
             stdoutdata, stderrdata = process.communicate()
             returncode = process.returncode
-            # if the process failed, let's share the output
+            # if the process failed, let's log the output
             if returncode:
                 self._debug("Error starting omxplayer for %s\n%s\n%s" % \
                             (name, str(stdoutdata), str(stderrdata)))
-            else:
-                # else we set a timer to kill the old vid
-                threading.Timer(config.inter_video_delay, 
-                                self._stop_video, [pgid, name]).start()
+
         except Exception as e:
              self._debug("Error starting omxplayer for %s\n%s" % (name, str(e)))
 
@@ -251,7 +249,7 @@ def main():
         ]
     for film in films:
         print "Starting threaded sequence"
-        video = VideoThread([film], media_dir, debug=2)
+        video = VideoThread(film, media_dir, debug=2)
         video.start()
         print "Sequence started"
         video.wait_for_end()
