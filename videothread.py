@@ -188,7 +188,8 @@ class VideoThread(threading.Thread):
                    (time() <= self._end_time)):
                 pass
             # we kill the old vid
-            self._stop_video(pgid, name)
+            if process.poll() is None:
+                self._stop_video(pgid, name)
             # Wait until process terminates (without using p.wait())
             # while process.poll() is None:
             #     # Process hasn't exited yet, let's wait some
