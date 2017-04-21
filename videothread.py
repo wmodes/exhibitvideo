@@ -167,14 +167,9 @@ class VideoThread(threading.Thread):
         #if True:
         try:
             proc = None
-            if (self._debug_flag >= 3):
-                proc = subprocess.Popen(my_cmd, shell=True, preexec_fn=os.setsid, stdin=nullin)
-                # TODO: Figure out way that we can save the output to out debug file
-                # can't do it without changes since communicate waits for end of process
-                # out, err = proc.communicate()
-            else:
-                proc = subprocess.Popen(my_cmd, shell=True, preexec_fn=os.setsid, stdin=nullin, stdout=nullout)
-            # save this process group id
+            proc = subprocess.Popen(my_cmd, shell=True, preexec_fn=os.setsid, stdin=nullin, 
+                                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+           # save this process group id
             pgid = os.getpgid(proc.pid)
             self._player_pgid = pgid
             self._debug("Starting process: %i (%s)" % (pgid, name))
@@ -193,9 +188,18 @@ class VideoThread(threading.Thread):
             while (not self.stopped() and
                    (time() <= self._end_time)):
                 pass
-            # then we set a timer to kill the old vid
-            threading.Timer(config.inter_video_delay, 
-                            self._stop_video, [pgid, name]).start()
+            # was starting omxplayer even successful?
+            # note that communicate() will wait until the process ends
+            stdoutdata, stderrdata = process.communicate()
+            returncode = process.returncode
+            # if the process failed, let's share the output
+            if returncode:
+                self._debug("Error starting omxplayer for %s\n%s\n%s" % \
+                            (name, str(stdoutdata), str(stderrdata)))
+            else:
+                # else we set a timer to kill the old vid
+                threading.Timer(config.inter_video_delay, 
+                                self._stop_video, [pgid, name]).start()
         except Exception as e:
              self._debug("Error starting omxplayer for %s\n%s" % (name, str(e)))
 
