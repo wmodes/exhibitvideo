@@ -174,11 +174,11 @@ class VideoThread(threading.Thread):
             self._debug("Starting process: %i (%s)" % (pgid, name))
             # If we have a loop
             if ('loop' in video['tags']):
-                self._debug("Looping %.2fs and setting kill timer for %s (pid %i)" %
+                self._debug("Looping %.2fs for %s (pid %i)" %
                             (length - config.inter_video_delay, name, pgid))
             # otherwise
             else:
-                self._debug("Waiting %.2fs and setting kill timer for %s (pid %i)" %
+                self._debug("Waiting %.2fs for %s (pid %i)" %
                             (length - config.inter_video_delay, name, pgid))
             # wait in a tight loop, checking if we've received stop event or time is over
             start_time = time()
@@ -189,11 +189,7 @@ class VideoThread(threading.Thread):
                 pass
             # we kill the old vid
             if process.poll() is None:
-                self._stop_video(pgid, name)
-            # Wait until process terminates (without using p.wait())
-            # while process.poll() is None:
-            #     # Process hasn't exited yet, let's wait some
-            #     time.sleep(0.5)
+                self._stop_video(pgid, name)    
             # was starting omxplayer even successful?
             stdoutdata, stderrdata = process.communicate()
             returncode = process.returncode
