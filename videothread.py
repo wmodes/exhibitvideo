@@ -186,7 +186,7 @@ class VideoThread(threading.Thread):
             # when we get close to the end, we release the thread to start new vid
             while (not self.stopped() and
                    (time() <= self._end_time)):
-                pass
+                sleep(0.1)
             # we kill the old vid
             if process.poll() is None:
                 self._stop_video(pgid, name)    
@@ -209,7 +209,7 @@ class VideoThread(threading.Thread):
         # now wait until time expires
         while (not self.stopped() and
                (time() <= self._end_time)):
-            pass
+            sleep(0.1)
 
     def _stop_video(self, pgid, name):
         self._debug("Sending SIGTERM to process %i (%s)" % (pgid, name))
