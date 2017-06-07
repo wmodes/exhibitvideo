@@ -180,17 +180,23 @@ class VideoThread(threading.Thread):
             else:
                 self._debug("Waiting %.2fs for %s (pid %i)" %
                             (length - config.inter_video_delay, name, pgid))
-            # wait in a tight loop, checking if we've received stop event or time is over
+            # generate expected _end_time (now + length)
             start_time = time()
             self._end_time = start_time + length
-            # when we get close to the end, we release the thread to start new vid
-            while (not self.stopped() and
-                   (time() <= self._end_time)):
+            # wait until the end times (but also allowing that the stop flag is triggered)
+            while ((time() <= self._end_time) and
+                    not self.stopped()):
                 sleep(0.1)
-            # we kill the old vid
+            # emerging from this loop, either
+            #   1) player ended gracefully
+            #   2) the video is looped, and so needs to be stopped
+            #   3) the thread received a stop order, and so video needs to be killed
+            #   4) something else, like player hung
+            # In any case, we kill the process group of the video, if we can
             if process.poll() is None:
                 self._stop_video(pgid, name)    
-            # was starting omxplayer even successful?
+            # Now that we have ended one way or the other, we should be able to get stdout/stderr
+            # Report if we had any problems starting omxplayer
             stdoutdata, stderrdata = process.communicate()
             returncode = process.returncode
             # if the process failed, let's log the output
@@ -201,14 +207,19 @@ class VideoThread(threading.Thread):
              self._debug("Error starting omxplayer for %s\n%s" % (name, str(e)))
 
     def wait_for_end(self):
-        """Wait for end of video in tight loop"""
-        # wait until we get the timing info
-        while not self._end_time:
-            pass
+        """Wait for end of video in tight loop. This provides a synchronous mechanism to wait
+        for the end of a video."""
+        #
+        # The run() method is called asynchronously, so it is possible to call this 
+        # method before run() has recorded the expected _end_time. 
+        # thus we wait until the end times (but also allowing that the stop flag is triggered)
+        while (not self._end_time and
+                not self.stopped()):
+            sleep(0.1)
         #self._debug("Waiting for end of video")
-        # now wait until time expires
-        while (not self.stopped() and
-               (time() <= self._end_time)):
+        # now wait until time expires (or we are interrupted because stop flag is triggered)
+        while ((time() <= self._end_time) and
+                not self.stopped()):
             sleep(0.1)
 
     def _stop_video(self, pgid, name):
