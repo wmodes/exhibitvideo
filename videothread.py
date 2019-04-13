@@ -163,7 +163,6 @@ class VideoThread(threading.Thread):
             my_cmd = " ".join(config.content_cmd + ['--pos', str(start)]) % \
                     (omx_layer_content, omx_player)
             my_cmd += " '" + filename + "'"
-            print my_cmd
         self._debug("cmd:", my_cmd, l=2)
         # launch the player, saving the process handle
         # TODO: after debugging, replace 'if True' with 'try' and enable 'except'
