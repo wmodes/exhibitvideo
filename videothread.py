@@ -152,14 +152,17 @@ class VideoThread(threading.Thread):
         omx_player = 1 if (omx_player != 1) else 2
         # build omxplayer command
         if ('loop' in video['tags']):
-            my_cmd = " ".join(config.loop_cmd + [filename]) % \
-                              (omx_layer_loop, omx_player)
+            my_cmd = " ".join(config.loop_cmd) \
+                    + " \"" + filename + "\"" \
+                    % (omx_layer_loop, omx_player)
         elif ('transition' in video['tags']):
-            my_cmd = " ".join(config.transition_cmd + ['--pos', str(start), filename]) % \
-                              (omx_layer_transition, omx_player)
+            my_cmd = " ".join(config.transition_cmd + ['--pos', str(start)]) \
+                    + " \"" + filename + "\"" \
+                    % (omx_layer_transition, omx_player)
         else: 
-            my_cmd = " ".join(config.content_cmd + ['--pos', str(start), filename]) % \
-                              (omx_layer_content, omx_player)
+            my_cmd = " ".join(config.content_cmd + ['--pos', str(start)]) \
+                    + " \"" + filename + "\"" \
+                    % (omx_layer_content, omx_player)
         self._debug("cmd:", my_cmd, l=2)
         # launch the player, saving the process handle
         # TODO: after debugging, replace 'if True' with 'try' and enable 'except'
