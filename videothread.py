@@ -160,6 +160,8 @@ class VideoThread(threading.Thread):
                     + " '" + filename + "'" \
                     % (omx_layer_transition, omx_player)
         else: 
+            print " ".join(config.content_cmd + ['--pos', str(start)]) \
+                    + " '" + filename + "'"
             my_cmd = " ".join(config.content_cmd + ['--pos', str(start)]) \
                     + " '" + filename + "'" \
                     % (omx_layer_content, omx_player)
