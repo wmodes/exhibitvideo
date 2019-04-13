@@ -8,7 +8,7 @@ Copyright: 2017, MIT """
 
 
 debug = 3
-media_base = 'media'
+media_base = '../media'
 filmdb = 'FILM_DB.json'
 logfile = '/var/log/exhibitvideo/exhibitvideo.log'
 inter_video_delay = 0.25
