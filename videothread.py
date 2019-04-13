@@ -245,7 +245,7 @@ def main():
     media_dir = "media"
     films = [
           { "file" : "launch_party_timelapse.mp4",
-            "tags" : [ "feature" ],
+            "tags" : [ "footage" ],
             "length" : 20,
           },
           { "file" : "secret_history_dorris_turner_what_does_the_river_mean_to_you.mp4",
@@ -253,7 +253,7 @@ def main():
             "length" : 20,
           },
           { "file" : "la_crosse_boathouses_loop.mp4",
-            "tags" : [ "loop" ],
+            "tags" : [ "title" ],
             "length" : 200,
           },
         ]

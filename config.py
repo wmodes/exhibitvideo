@@ -21,21 +21,25 @@ transition_cmd = omx_cmd + ['--layer %i', '--dbus_name', 'org.mpris.MediaPlayer2
 
 # A recipe for film sequencing - a list of tuples (<tag>, <length>)
 # note length here, overrides db values, and 0 takes db value
+# possible values: footage, interview, title, trailer
 recipedb = [
+    ('trailer', 0),
+    ('footage', 0),
+
     ('interview', 0),
-    ('loop', 60),
+    ('footage', 0),
     ('title', 0),
 
-    ('feature', 0),
-    ('scenic', 0),
+    ('footage', 0),
+    ('footage', 0),
 
     ('interview', 0),
-    ('loop', 60),
+    ('footage', 60),
     ('title', 0),
 
     # ('playful', 0),
-    ('scenic', 0),
+    ('footage', 0),
 
     ('interview', 0),
-    ('scenic', 0),
+    ('footage', 0),
 ]
